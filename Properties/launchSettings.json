@@ -1,0 +1,21 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:57461",
+      "sslPort": 0
+    }
+  },
+  "profiles": {
+    "LDFCore.Generator": {
+      "commandName": "Project",
+      "commandLineArgs": "-NameOptions 0,0,0,1 -NameSpace TestProject -DB \"PostgreSQL,Server=119.23.145.64; User Id=postgres; Database=ldfcore_template; Port=40402; Password=zhzw@2020Postgres.; SSL Mode=Prefer; Trust Server Certificate=true;\"",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:5000"
+    }
+  }
+}

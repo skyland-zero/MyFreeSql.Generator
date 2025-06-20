@@ -1,0 +1,117 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <Version>1.1.1</Version>
+    <IsPackable>true</IsPackable>
+    <PackAsTool>true</PackAsTool>
+    <Authors>zhzw</Authors>
+    <Product>FreeSql</Product>
+    <Description>基于FreeSql.Generator二次开发而来，使用 FreeSql 从数据库快速生成LDFCore框架代码，安装：dotnet tool install -g LDFCore.Generator</Description>
+    <RepositoryType></RepositoryType>
+    <PackageTags>LDFCore</PackageTags>
+    <CopyRazorGenerateFilesToPublishDirectory>true</CopyRazorGenerateFilesToPublishDirectory>
+    <Company>SKYLNAD</Company>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Temp\**" />
+    <Content Remove="Temp\**" />
+    <EmbeddedResource Remove="Temp\**" />
+    <None Remove="Temp\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Startup.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Templates\controller.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="__razor.cshtml.txt" />
+    <None Remove="__重新生成.bat" />
+  </ItemGroup>
+
+  
+
+  <ItemGroup>
+    <PackageReference Include="Colorful.Console" Version="1.2.15" />
+    <PackageReference Include="FreeSql.Provider.Dameng" Version="3.2.665" />
+    <PackageReference Include="FreeSql.Provider.KingbaseES" Version="3.2.665" />
+    <PackageReference Include="FreeSql.Provider.MySqlConnector" Version="3.2.665" />
+    <PackageReference Include="FreeSql.Provider.Oracle" Version="3.2.665" />
+    <PackageReference Include="FreeSql.Provider.PostgreSQL" Version="3.2.665" />
+    <PackageReference Include="FreeSql.Provider.ShenTong" Version="3.2.665" />
+    <PackageReference Include="FreeSql.Provider.Sqlite" Version="3.2.665" />
+    <PackageReference Include="FreeSql.Provider.SqlServer" Version="3.2.665" />
+    <PackageReference Include="RazorEngine.NetCore" Version="3.1.0" />
+    <PackageReference Include="Scriban" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DmProvider">
+      <HintPath>..\Providers\FreeSql.Provider.Dameng\lib\DmProvider\netstandard2.0\DmProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.OscarClient">
+      <HintPath>..\Providers\FreeSql.Provider.ShenTong\lib\System.Data.OscarClient.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="Templates\controller.cshtml" Pack="true">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+      <PackagePath>Templates\</PackagePath>
+    </None>
+    <None Include="Templates\entity.cshtml" Pack="true">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+      <PackagePath>Templates\</PackagePath>
+    </None>
+    <None Include="Templates\inputdto.cshtml" Pack="true">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+      <PackagePath>Templates\</PackagePath>
+    </None>
+    <None Include="Templates\iservices.cshtml" Pack="true">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+      <PackagePath>Templates\</PackagePath>
+    </None>
+    <None Include="Templates\mapper.cshtml" Pack="true">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+      <PackagePath>Templates\</PackagePath>
+    </None>
+    <None Include="Templates\outputdto.cshtml" Pack="true">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+      <PackagePath>Templates\</PackagePath>
+    </None>
+    <None Include="Templates\pagelist_outputdto.cshtml" Pack="true">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+      <PackagePath>Templates\</PackagePath>
+    </None>
+    <None Include="Templates\query.cshtml" Pack="true">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+      <PackagePath>Templates\</PackagePath>
+    </None>
+    <None Include="Templates\services.cshtml" Pack="true">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+      <PackagePath>Templates\</PackagePath>
+    </None>
+    <None Include="Templates\inputdto_validator.sbn" Pack="true">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+      <PackagePath>Templates\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,41 @@
+﻿@using FreeSql.DatabaseModel;
+@using MyFreeSql.Generator
+@{
+
+    var gen = Model as List<RazorModel>;
+
+    Func<string, string> GetAttributeString = attr =>
+    {
+        if (string.IsNullOrEmpty(attr)) return "";
+        return string.Concat(",", attr.Trim('[', ']')).TrimStart(',');
+    };
+
+}
+using AutoMapper;
+using LDFCore.AutoMapper;
+using @(gen.FirstOrDefault()?.NameSpace).Domains.Domains@(gen.FirstOrDefault()?.ModuleName);
+using @(gen.FirstOrDefault()?.NameSpace).Services@(gen.FirstOrDefault()?.ModuleName)Svc.Dtos;
+
+namespace @(gen.FirstOrDefault()?.NameSpace).Services@(gen.FirstOrDefault()?.ModuleName)Svc.Profiles;
+
+/// <summary>
+/// 自动生成的Mapper
+/// </summary>
+public partial class MapperConfig : IMapperConfig
+{
+    /// <summary>
+    /// 绑定
+    /// </summary>
+    /// <param name="cfg"></param>
+    public void Bind(IMapperConfigurationExpression cfg)
+    {
+    @foreach (var g in gen)
+    {
+        var name = g.GetCsName(g.TableName);
+        @:cfg.CreateMap<@(name)Input, @name>();
+        @:cfg.CreateMap<@(name), @(name)Output>();
+        @:
+    }
+    }
+}
+

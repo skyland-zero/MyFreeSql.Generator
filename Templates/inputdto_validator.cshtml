@@ -1,0 +1,65 @@
+﻿@using FreeSql.DatabaseModel;
+@using MyFreeSql.Generator
+@{
+    var gen = Model as RazorModel;
+    var fks = gen.table.Foreigns;
+
+    Func<string, string> GetAttributeString = attr =>
+    {
+        if (string.IsNullOrEmpty(attr)) return "";
+        return string.Concat(",", attr.Trim('[', ']')).TrimStart(',');
+    };
+
+    Func<string, string> GetDefaultValue = defval =>
+    {
+        if (string.IsNullOrEmpty(defval)) return "";
+        return ""; //TODO 这里原语句报错，不知道为啥。。
+};
+
+    Func<DbForeignInfo, string> GetFkObjectName = fkx =>
+    {
+        var eqfks = fks.Where(fk22a => fk22a.ReferencedTable.Name == fkx.ReferencedTable.Name);
+        if (eqfks.Count() == 1) return fkx.ReferencedTable.Name;
+        var fkretname = fkx.Columns[0].Name;
+        if (fkretname.EndsWith(fkx.ReferencedColumns[0].Name, StringComparison.CurrentCultureIgnoreCase)) fkretname = fkretname.Substring(0, fkretname.Length - fkx.ReferencedColumns[0].Name.Length).TrimEnd('_');
+        if (fkretname.EndsWith(fkx.ReferencedTable.Name, StringComparison.CurrentCultureIgnoreCase)) fkretname = fkretname.Substring(0, fkretname.Length - fkx.ReferencedTable.Name.Length).TrimEnd('_');
+        if (fkretname.StartsWith(fkx.ReferencedTable.Name, StringComparison.CurrentCultureIgnoreCase)) fkretname = fkretname.Substring(fkx.ReferencedTable.Name.Length).TrimStart('_');
+        return fkx.ReferencedTable.Name + (string.IsNullOrEmpty(fkretname) ? "" : ("_" + fkretname));
+    };
+
+    Func<DbForeignInfo, string> GetFkObjectNameOutside = fkx =>
+    {
+        var eqfks = fkx.Table.Foreigns.Where(fk22a => fk22a.ReferencedTable.Name == fkx.ReferencedTable.Name);
+        if (eqfks.Count() == 1) return fkx.Table.Name;
+        var fkretname = fkx.Columns[0].Name;
+        if (fkretname.EndsWith(fkx.ReferencedColumns[0].Name, StringComparison.CurrentCultureIgnoreCase)) fkretname = fkretname.Substring(0, fkretname.Length - fkx.ReferencedColumns[0].Name.Length).TrimEnd('_');
+        if (fkretname.EndsWith(fkx.ReferencedTable.Name, StringComparison.CurrentCultureIgnoreCase)) fkretname = fkretname.Substring(0, fkretname.Length - fkx.ReferencedTable.Name.Length).TrimEnd('_');
+        if (fkretname.StartsWith(fkx.ReferencedTable.Name, StringComparison.CurrentCultureIgnoreCase)) fkretname = fkretname.Substring(fkx.ReferencedTable.Name.Length).TrimStart('_');
+        return fkx.Table.Name + (string.IsNullOrEmpty(fkretname) ? "" : ("_" + fkretname));
+    };
+}
+using System;
+using System.Collections.Generic;
+
+namespace @(gen.NameSpace).Services@(gen.ModuleName)Svc.Dtos;
+
+/// <summary>
+/// @(gen.TableComment?.Replace("\r\n", "\n").Replace("\n", "\r\n       /// "))输入模型
+///</summary>
+public class @(gen.GetCsName(gen.TableName))Input
+{
+    @foreach (var col in gen.columns)
+    {
+        var csname = gen.GetCsName(col.Name);
+        if (csname != "Id" && gen.ExtendsOneList.Contains(csname))
+        {
+            continue;
+        }
+    @:/// <summary>
+    @:/// @col.Coment?.Replace("\r\n", "\n").Replace("\n", "\r\n		/// ")
+    @:/// </summary>
+    @:public @gen.GetCsType(col) @csname { get; set; }
+    @:
+    }
+}
+

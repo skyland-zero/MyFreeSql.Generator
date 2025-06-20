@@ -1,0 +1,162 @@
+﻿@using FreeSql.DatabaseModel;
+@using MyFreeSql.Generator;
+@{
+    var gen = Model as RazorModel;
+    var fks = gen.table.Foreigns;
+
+    Func<string, string> GetAttributeString = attr =>
+    {
+        if (string.IsNullOrEmpty(attr)) return "";
+        return string.Concat(",", attr.Trim('[', ']')).TrimStart(',');
+    };
+
+    Func<string, string> GetDefaultValue = defval =>
+    {
+        if (string.IsNullOrEmpty(defval)) return "";
+        return ""; //TODO 这里原语句报错，不知道为啥。。
+};
+
+    Func<DbForeignInfo, string> GetFkObjectName = fkx =>
+    {
+        var eqfks = fks.Where(fk22a => fk22a.ReferencedTable.Name == fkx.ReferencedTable.Name);
+        if (eqfks.Count() == 1) return fkx.ReferencedTable.Name;
+        var fkretname = fkx.Columns[0].Name;
+        if (fkretname.EndsWith(fkx.ReferencedColumns[0].Name, StringComparison.CurrentCultureIgnoreCase)) fkretname = fkretname.Substring(0, fkretname.Length - fkx.ReferencedColumns[0].Name.Length).TrimEnd('_');
+        if (fkretname.EndsWith(fkx.ReferencedTable.Name, StringComparison.CurrentCultureIgnoreCase)) fkretname = fkretname.Substring(0, fkretname.Length - fkx.ReferencedTable.Name.Length).TrimEnd('_');
+        if (fkretname.StartsWith(fkx.ReferencedTable.Name, StringComparison.CurrentCultureIgnoreCase)) fkretname = fkretname.Substring(fkx.ReferencedTable.Name.Length).TrimStart('_');
+        return fkx.ReferencedTable.Name + (string.IsNullOrEmpty(fkretname) ? "" : ("_" + fkretname));
+    };
+
+    Func<DbForeignInfo, string> GetFkObjectNameOutside = fkx =>
+    {
+        var eqfks = fkx.Table.Foreigns.Where(fk22a => fk22a.ReferencedTable.Name == fkx.ReferencedTable.Name);
+        if (eqfks.Count() == 1) return fkx.Table.Name;
+        var fkretname = fkx.Columns[0].Name;
+        if (fkretname.EndsWith(fkx.ReferencedColumns[0].Name, StringComparison.CurrentCultureIgnoreCase)) fkretname = fkretname.Substring(0, fkretname.Length - fkx.ReferencedColumns[0].Name.Length).TrimEnd('_');
+        if (fkretname.EndsWith(fkx.ReferencedTable.Name, StringComparison.CurrentCultureIgnoreCase)) fkretname = fkretname.Substring(0, fkretname.Length - fkx.ReferencedTable.Name.Length).TrimEnd('_');
+        if (fkretname.StartsWith(fkx.ReferencedTable.Name, StringComparison.CurrentCultureIgnoreCase)) fkretname = fkretname.Substring(fkx.ReferencedTable.Name.Length).TrimStart('_');
+        return fkx.Table.Name + (string.IsNullOrEmpty(fkretname) ? "" : ("_" + fkretname));
+    };
+}
+using AutoMapper;
+using FreeSql;
+using LDFCore.Authorized;
+using LDFCore.Platform.Extensions;
+using LDFCore.Platform.Models;
+using LDFCore.Platform.Result;
+using LDFCore.Platform.Utils;
+using LDFCore.Platform.Utils.Helper;
+using @(gen.NameSpace).Domains.Domains@(gen.ModuleName);
+using @(gen.NameSpace).Services@(gen.ModuleName)Svc.Dtos;
+using @(gen.NameSpace).Services@(gen.ModuleName)Svc.Query;
+using @(gen.NameSpace).Services@(gen.ModuleName)Svc.Profiles;
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace @(gen.NameSpace).Services@(gen.ModuleName)Svc;
+
+@{
+var tableName = gen.GetCsName(gen.TableName);
+var repoName = gen.GetFirstRowCsName(gen.TableName);
+var colCsNames = gen.columns.Select(a => gen.GetCsName(a.Name)).ToList();
+var orderStr = colCsNames.Contains("CreationTime") ? ".OrderByDescending(a => a.CreationTime)" : ".OrderBy(a => a.Id)";
+}
+/// <summary>
+/// @(gen.TableComment?.Replace("\r\n", "\n").Replace("\n", "\r\n       /// "))服务
+///</summary>
+public class @(tableName)Services : I@(tableName)Services
+{
+    
+    private readonly IMapper _mapper;
+    private readonly IBaseRepository<@(tableName), @(gen.GetPrimaryTypeStr())> _@(repoName)Repo;
+    /// <summary>
+    /// INIT
+    /// </summary>
+    public @(tableName)Services(IMapper mapper, IBaseRepository<@(tableName), @(gen.GetPrimaryTypeStr())> @(repoName)Repo)
+    {
+        _mapper = mapper;
+        _@(repoName)Repo = @(repoName)Repo;
+    }
+
+    /// <summary>
+    /// 分页列表
+    /// </summary>
+    /// <param name="parms"></param>
+    /// <returns></returns>
+    public async Task<IResultModel<PageList<@(tableName)ListOutput>>> PageAsync(@(tableName)Query parms)
+    {
+        var list = await _@(repoName)Repo.Select
+            //TODO 这里补充筛选条件
+            .Count(out var count)
+            @orderStr
+            .Page(parms.Page, parms.PageSize)
+            .ToListAsync<@(tableName)ListOutput>();
+
+        parms.TotalCount = count;
+        return PageResult.PageList(list, parms);
+    }
+
+    /// <summary>
+    /// 详情
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public async Task<IResultModel<@(tableName)Output>> DetailAsync(@gen.GetPrimaryTypeStr() id)
+    {
+        var data = await _@(repoName)Repo.Select.Where(a => a.Id == id).FirstAsync<@(tableName)Output>();
+        return ResultModel.Success(data);
+    }
+
+    /// <summary>
+    /// 添加
+    /// </summary>
+    /// <returns></returns>
+    public async Task<IResultModel> AddAsync(@(tableName)Input model)
+    {
+        var data = _mapper.Map<@(tableName)>(model);
+        data.Id = IdWorker.NextId();
+        await _@(repoName)Repo.InsertAsync(data);
+        return ResultModel.Success();
+    }
+
+    /// <summary>
+    /// 编辑
+    /// </summary>
+    /// <returns></returns>
+    public async Task<IResultModel> EditAsync(@(tableName)Input model)
+    {
+        var data = await _@(repoName)Repo.FindAsync(model.Id);
+        _mapper.Map(model, data);
+        await _@(repoName)Repo.UpdateAsync(data);
+        return ResultModel.Success(data);
+    }
+
+    /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="parms"></param>
+    /// <returns></returns>
+    public async Task<IResultModel> RemoveAsync(RemoveModel<@(gen.GetPrimaryTypeStr())> parms)
+    {
+        if (parms == null || parms.Id == null)
+        {
+            return ResultModel.Failed("无效参数");
+        }
+        if (!await _@(repoName)Repo.Select.AnyAsync(a => a.Id == parms.Id))
+        {
+            return ResultModel.Failed("数据不存在");
+        }
+        @if (colCsNames.Contains("IsDeleted"))
+        {
+        @:await _@(repoName)Repo.Where(a => a.Id == parms.Id).ToUpdate().Set(a => a.IsDeleted == true).ExecuteAffrowsAsync();
+        }
+        else
+        {
+        @:await _@(repoName)Repo.DeleteAsync(parms.Id);
+        }
+        return ResultModel.Success();
+    }
+}
