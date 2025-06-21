@@ -264,6 +264,22 @@ namespace MyFreeSql.Generator
                     BuildAndWriteToFile(parser, "entity.liquid", model,
                         Path.Combine(domainsFolder, table.Name, $"{model.TableCsName}.cs"));
                     ++outputCounter;
+                    
+                    BuildAndWriteToFile(parser, "CreateDto.liquid", model,
+                        Path.Combine(domainsFolder, table.Name, $"{model.TableCsName}CreateDto.cs"));
+                    ++outputCounter;
+                    
+                    BuildAndWriteToFile(parser, "PageInput.liquid", model,
+                        Path.Combine(domainsFolder, table.Name, $"{model.TableCsName}PageInput.cs"));
+                    ++outputCounter;
+                    
+                    BuildAndWriteToFile(parser, "PageOutput.liquid", model,
+                        Path.Combine(domainsFolder, table.Name, $"{model.TableCsName}PageOutput.cs"));
+                    ++outputCounter;
+                    
+                    BuildAndWriteToFile(parser, "UpdateDto.liquid", model,
+                        Path.Combine(domainsFolder, table.Name, $"{model.TableCsName}UpdateDto.cs"));
+                    ++outputCounter;
                 }
             }
 

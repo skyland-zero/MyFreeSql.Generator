@@ -1,0 +1,17 @@
+using System;
+
+namespace {{ Namespace }}.DTO
+{
+    /// <summary>
+    /// {{ TableComment }}
+    /// </summary>
+    public class {{ TableCsName }}CreateDto
+    {
+    {%- for col in Columns %}
+        /// <summary>
+        /// {{ col.Comment }}
+        /// </summary>
+        public {{ col.CsTypeName }} {{ col.CsName }} { get; set; }
+    {% endfor %}
+    }
+}

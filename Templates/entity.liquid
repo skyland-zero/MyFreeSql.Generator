@@ -7,7 +7,7 @@ namespace {{ Namespace }}.Entities.SAWMS
     /// {{ TableComment }}
     /// </summary>
     [Table(DisableSyncStructure = true)]
-    public class {{ TableCsName }} {{ Extends }}
+    public class {{ TableCsName }}{{ Extends }}
     {
 {%- for col in Columns %}
         /// <summary>

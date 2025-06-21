@@ -12,10 +12,6 @@ public class TableInfoModel
         Namespace = argsNameSpace;
         TableInfo = table;
         fsql = fsqlIn;
-        // Columns = new List<ColumnInfoModel>()
-        // {
-        //     new ColumnInfoModel() { CsName = "123", Name = "123", Comment = "123123" }
-        // };
     }
 
     private List<string> AwsProperties =
@@ -27,6 +23,7 @@ public class TableInfoModel
     private DbTableInfo TableInfo;
 
     private IFreeSql fsql;
+    private string Suffix;
 
     /// <summary>
     /// 表名称
@@ -105,15 +102,14 @@ public class TableInfoModel
                     DefaultValue = Utils.GetColumnDefaultValue(fsql, x, false),
                     ColAttributeStr = Utils.GetColumnAttribute(fsql, x)
                 }).ToList();
-            
+
                 if (IsAwsEntity)
                 {
                     list = list.Where(x => !AwsProperties.Contains(x.Name)).ToList();
                 }
-            
+
                 return list;
             }
-            
         }
     }
 

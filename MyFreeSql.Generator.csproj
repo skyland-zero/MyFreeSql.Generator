@@ -24,6 +24,18 @@
     <None Update="Templates\entity.liquid">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Templates\CreateDto.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\PageInput.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\PageOutput.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\UpdateDto.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -63,50 +75,6 @@
     <Reference Include="System.Data.OscarClient">
       <HintPath>..\Providers\FreeSql.Provider.ShenTong\lib\System.Data.OscarClient.dll</HintPath>
     </Reference>
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <None Include="Templates\entity.cshtml" Pack="true">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-      <PackagePath>Templates\</PackagePath>
-    </None>
-    <None Include="Templates\inputdto.cshtml" Pack="true">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-      <PackagePath>Templates\</PackagePath>
-    </None>
-    <None Include="Templates\iservices.cshtml" Pack="true">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-      <PackagePath>Templates\</PackagePath>
-    </None>
-    <None Include="Templates\mapper.cshtml" Pack="true">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-      <PackagePath>Templates\</PackagePath>
-    </None>
-    <None Include="Templates\outputdto.cshtml" Pack="true">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-      <PackagePath>Templates\</PackagePath>
-    </None>
-    <None Include="Templates\pagelist_outputdto.cshtml" Pack="true">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-      <PackagePath>Templates\</PackagePath>
-    </None>
-    <None Include="Templates\query.cshtml" Pack="true">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-      <PackagePath>Templates\</PackagePath>
-    </None>
-    <None Include="Templates\services.cshtml" Pack="true">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-      <PackagePath>Templates\</PackagePath>
-    </None>
   </ItemGroup>
 
 </Project>
