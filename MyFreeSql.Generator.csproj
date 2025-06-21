@@ -21,6 +21,9 @@
     <Content Remove="Temp\**" />
     <EmbeddedResource Remove="Temp\**" />
     <None Remove="Temp\**" />
+    <None Update="Templates\entity.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -40,6 +43,7 @@
 
   <ItemGroup>
     <PackageReference Include="Colorful.Console" Version="1.2.15" />
+    <PackageReference Include="Fluid.Core" Version="2.24.0" />
     <PackageReference Include="FreeSql.Provider.Dameng" Version="3.5.208" />
     <PackageReference Include="FreeSql.Provider.KingbaseES" Version="3.5.208" />
     <PackageReference Include="FreeSql.Provider.MySqlConnector" Version="3.5.208" />
@@ -63,11 +67,6 @@
 
 
   <ItemGroup>
-    <None Include="Templates\controller.cshtml" Pack="true">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-      <PackagePath>Templates\</PackagePath>
-    </None>
     <None Include="Templates\entity.cshtml" Pack="true">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <CopyToPublishDirectory>Always</CopyToPublishDirectory>
@@ -104,11 +103,6 @@
       <PackagePath>Templates\</PackagePath>
     </None>
     <None Include="Templates\services.cshtml" Pack="true">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-      <PackagePath>Templates\</PackagePath>
-    </None>
-    <None Include="Templates\inputdto_validator.sbn" Pack="true">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <CopyToPublishDirectory>Always</CopyToPublishDirectory>
       <PackagePath>Templates\</PackagePath>

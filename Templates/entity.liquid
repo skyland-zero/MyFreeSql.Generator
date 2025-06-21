@@ -1,0 +1,22 @@
+﻿using System;
+using FreeSql.DataAnnotations;
+
+namespace {{ Namespace }}.Entities.SAWMS
+{
+    /// <summary>
+    /// {{ TableComment }}
+    /// </summary>
+    [Table(DisableSyncStructure = true)]
+    public class {{ TableCsName }} {{ Extends }}
+    {
+{%- for col in Columns %}
+        /// <summary>
+        /// {{ col.Comment }}
+        /// </summary>
+        {% if col.ColAttributeStr != "" -%}
+        {{- col.ColAttributeStr -}}    
+        {% endif %}
+        public {{ col.CsTypeName }} {{ col.CsName }} { get; set; } {{ col.DefaultValue }}
+{% endfor %}
+    }
+}
