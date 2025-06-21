@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "LDFCore.Generator": {
+    "MyFreeSql.Generator": {
       "commandName": "Project",
       "commandLineArgs": "-NameOptions 0,0,0,1 -NameSpace TestProject -DB \"PostgreSQL,Server=192.168.10.227; User Id=admin; Database=cits; Port=25432; Password=1234qwer.; SSL Mode=Prefer; Trust Server Certificate=true;\"",
       "launchBrowser": false,

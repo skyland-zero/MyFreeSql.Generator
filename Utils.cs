@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using FreeSql;
+using FreeSql.DataAnnotations;
 using FreeSql.DatabaseModel;
 using FreeSql.Internal.CommonProvider;
 using MySqlConnector;
@@ -255,4 +256,9 @@ public class Utils
                     return (fsql.Select<TestTb>() as Select0Provider)._commonUtils.FormatSql("{0}", defval);
         return isInsertValueSql ? defval : null; //sql function or exp
     }
+    
+
 }
+
+[Table(DisableSyncStructure = true)]
+public class TestTb { public Guid id { get; set; } }

@@ -215,8 +215,6 @@ namespace MyFreeSql.Generator
             {
                 var tables = fsql.DbFirst.GetTablesByDatabase();
                 var outputTables = tables;
-                //记录下来用于生成Mapper
-                var allModels = new List<RazorModel>();
                 //开始生成操作
                 var parser = new FluidParser();
                 TemplateOptions.Default.MemberAccessStrategy = new UnsafeMemberAccessStrategy();
@@ -264,19 +262,19 @@ namespace MyFreeSql.Generator
                     BuildAndWriteToFile(parser, "entity.liquid", model,
                         Path.Combine(domainsFolder, table.Name, $"{model.TableCsName}.cs"));
                     ++outputCounter;
-                    
+
                     BuildAndWriteToFile(parser, "CreateDto.liquid", model,
                         Path.Combine(domainsFolder, table.Name, $"{model.TableCsName}CreateDto.cs"));
                     ++outputCounter;
-                    
+
                     BuildAndWriteToFile(parser, "PageInput.liquid", model,
                         Path.Combine(domainsFolder, table.Name, $"{model.TableCsName}PageInput.cs"));
                     ++outputCounter;
-                    
+
                     BuildAndWriteToFile(parser, "PageOutput.liquid", model,
                         Path.Combine(domainsFolder, table.Name, $"{model.TableCsName}PageOutput.cs"));
                     ++outputCounter;
-                    
+
                     BuildAndWriteToFile(parser, "UpdateDto.liquid", model,
                         Path.Combine(domainsFolder, table.Name, $"{model.TableCsName}UpdateDto.cs"));
                     ++outputCounter;
@@ -307,74 +305,6 @@ FreeSql.Generator.LdfCore -NameOptions {string.Join(",", ArgsNameOptions.Select(
             wait.Set();
         }
 
-        /// <summary>
-        /// 获取模块文件夹
-        /// </summary>
-        /// <returns></returns>
-        private string GetModuleFolder(string baseFolder, RazorModel model)
-        {
-            return Path.Combine(baseFolder, model.GetModuleName());
-        }
-
-        private string GetFilePath(string baseFolder, RazorModel model, string suffix)
-        {
-            var module = GetModuleFolder(baseFolder, model);
-            return Path.Combine(module, $"{model.GetCsName(model.table.Name)}{suffix}");
-        }
-
-        /// <summary>
-        /// 生成文件
-        /// </summary>
-        /// <param name="razorId"></param>
-        /// <param name="model"></param>
-        /// <param name="filePath"></param>
-        private void BuildAndWriteToFile(string razorId, RazorModel model, string filePath)
-        {
-            var sw = new StringWriter();
-            RazorEngine.Engine.Razor.Run(razorId, sw, null, model);
-            StringBuilder plus = new StringBuilder();
-            plus.Append(sw.ToString());
-            plus.AppendLine();
-
-            var file = new FileInfo(filePath);
-            file.Directory.Create();
-            File.WriteAllText(file.FullName, plus.ToString());
-            sw.Dispose();
-        }
-
-        /// <summary>
-        /// 生成文件(Scriban模板)
-        /// </summary>
-        /// <param name="razorId"></param>
-        /// <param name="model"></param>
-        /// <param name="filePath"></param>
-        private void BuildAndWriteToFile(Template template, ScribanModel model, string filePath)
-        {
-            var result = template.Render(model);
-            var file = new FileInfo(filePath);
-            file.Directory.Create();
-            File.WriteAllText(file.FullName, result);
-        }
-
-        /// <summary>
-        /// 生成文件(这里给生成Mapper用，其他地方暂时没用到)
-        /// </summary>
-        /// <param name="razorId"></param>
-        /// <param name="model"></param>
-        /// <param name="filePath"></param>
-        private void BuildAndWriteToFile(string razorId, List<RazorModel> model, string filePath)
-        {
-            var sw = new StringWriter();
-            RazorEngine.Engine.Razor.Run(razorId, sw, null, model);
-            StringBuilder plus = new StringBuilder();
-            plus.Append(sw.ToString());
-            plus.AppendLine();
-
-            var file = new FileInfo(filePath);
-            file.Directory.Create();
-            File.WriteAllText(file.FullName, plus.ToString());
-            sw.Dispose();
-        }
 
         /// <summary>
         /// 生成文件
