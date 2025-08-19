@@ -5,7 +5,7 @@ namespace {{ Namespace }}.DTO
     /// <summary>
     /// {{ TableComment }}
     /// </summary>
-    public class {{ TableCsName }}PageOutput
+    public class {{ TableCsName }}PageOutput{{ DtoExtends }}
     {
     {%- for col in Columns %}
         /// <summary>
