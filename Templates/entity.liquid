@@ -1,12 +1,13 @@
 ﻿using System;
 using FreeSql.DataAnnotations;
+using Student.Model.Entities;
 
 namespace {{ Namespace }}.Entities.SAWMS
 {
     /// <summary>
     /// {{ TableComment }}
     /// </summary>
-    [Table(DisableSyncStructure = true)]
+    [Table(Name = "{{TableName}}",DisableSyncStructure = true)]
     public class {{ TableCsName }}{{ Extends }}
     {
 {%- for col in Columns %}

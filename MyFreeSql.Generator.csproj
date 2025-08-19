@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net9.0</TargetFramework>
-    <Version>0.0.1</Version>
+    <Version>0.0.2</Version>
     <IsPackable>true</IsPackable>
     <PackAsTool>true</PackAsTool>
     <Authors>SKYLAND</Authors>
@@ -15,6 +15,9 @@
     <Company>SKYLNAD</Company>
     <LangVersion>13</LangVersion>
     <PackageId>MyFreeSql.Generator.Aws</PackageId>
+    <AssemblyName>MyFreeSql.Generator.Aws</AssemblyName>
+    <RootNamespace>MyFreeSql.Generator.Aws</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
@@ -37,6 +40,9 @@
     <None Update="Templates\UpdateDto.liquid">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Templates\DefaultDto.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -56,15 +62,15 @@
 
   <ItemGroup>
     <PackageReference Include="Colorful.Console" Version="1.2.15" />
-    <PackageReference Include="Fluid.Core" Version="2.24.0" />
-    <PackageReference Include="FreeSql.Provider.Dameng" Version="3.5.208" />
-    <PackageReference Include="FreeSql.Provider.KingbaseES" Version="3.5.208" />
-    <PackageReference Include="FreeSql.Provider.MySqlConnector" Version="3.5.208" />
-    <PackageReference Include="FreeSql.Provider.Oracle" Version="3.5.208" />
-    <PackageReference Include="FreeSql.Provider.PostgreSQL" Version="3.5.208" />
-    <PackageReference Include="FreeSql.Provider.ShenTong" Version="3.5.208" />
-    <PackageReference Include="FreeSql.Provider.Sqlite" Version="3.5.208" />
-    <PackageReference Include="FreeSql.Provider.SqlServer" Version="3.5.208" />
+    <PackageReference Include="Fluid.Core" Version="2.25.0" />
+    <PackageReference Include="FreeSql.Provider.Dameng" Version="3.5.212" />
+    <PackageReference Include="FreeSql.Provider.KingbaseES" Version="3.5.212" />
+    <PackageReference Include="FreeSql.Provider.MySqlConnector" Version="3.5.212" />
+    <PackageReference Include="FreeSql.Provider.Oracle" Version="3.5.212" />
+    <PackageReference Include="FreeSql.Provider.PostgreSQL" Version="3.5.212" />
+    <PackageReference Include="FreeSql.Provider.ShenTong" Version="3.5.212" />
+    <PackageReference Include="FreeSql.Provider.Sqlite" Version="3.5.212" />
+    <PackageReference Include="FreeSql.Provider.SqlServer" Version="3.5.212" />
     <PackageReference Include="RazorEngine.NetCore" Version="3.1.0" />
     <PackageReference Include="Scriban" Version="6.2.1" />
   </ItemGroup>

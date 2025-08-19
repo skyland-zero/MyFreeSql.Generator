@@ -278,6 +278,10 @@ namespace MyFreeSql.Generator
                     BuildAndWriteToFile(parser, "UpdateDto.liquid", model,
                         Path.Combine(domainsFolder, table.Name, $"{model.TableCsName}UpdateDto.cs"));
                     ++outputCounter;
+                    
+                    BuildAndWriteToFile(parser, "DefaultDto.liquid", model,
+                        Path.Combine(domainsFolder, table.Name, $"{model.TableCsName}Dto.cs"));
+                    ++outputCounter;
                 }
             }
 

@@ -1,12 +1,12 @@
-using System;
-using Student.Common;
+﻿using System;
+using Student.Model.DTO.Aws;
 
 namespace {{ Namespace }}.DTO
 {
     /// <summary>
     /// {{ TableComment }}
     /// </summary>
-    public class {{ TableCsName }}PageInput : Pagination
+    public class {{ TableCsName }}Dto{{ DtoExtends }}
     {
     {%- for col in Columns %}
         /// <summary>

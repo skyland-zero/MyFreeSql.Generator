@@ -30,7 +30,14 @@ public class TableInfoModel
     /// </summary>
     public string TableName => TableInfo.Name;
 
-    public string TableCsName => TableName;
+    public string TableCsName
+    {
+        get
+        {
+            var temp = TableName.Replace("BO_EU_XG_", "").Replace("BO_EU_", "");
+            return Utils.GetCsName(temp);
+        }
+    }
 
     /// <summary>
     /// 是否是Aws表
@@ -69,6 +76,22 @@ public class TableInfoModel
             if (IsAwsEntity)
             {
                 return " : AWSEntity";
+            }
+
+            return "";
+        }
+    }
+
+    /// <summary>
+    /// 基类
+    /// </summary>
+    public string DtoExtends
+    {
+        get
+        {
+            if (IsAwsEntity)
+            {
+                return " : AwsEntityDto";
             }
 
             return "";
